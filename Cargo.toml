@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 magnus = { version = "0.5.1", features = ["embed"] }
+rutie = "0.8.4"

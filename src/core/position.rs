@@ -1,6 +1,8 @@
-use magnus::{class, define_class, function, method, prelude::*, Error};
+use magnus::{
+    class, define_class, function, init, method, module, Attr, Class, Error, Module, Object,
+};
 
-#[magnus::wrap(class = "Position")]
+#[magnus::wrap(class = "Position", free_immediately, size)]
 pub struct Position {
     pub x: f64,
     pub y: f64,
@@ -21,12 +23,14 @@ impl Position {
     }
 }
 
-/* #[magnus::init]
-fn init() -> Result<(), Error> {
+pub trait HasPosition {
+    fn pos(&self) -> &Position;
+}
+
+pub fn init() -> Result<(), Error> {
     let class = define_class("Position", class::object())?;
     class.define_singleton_method("new", function!(Position::new, 3))?;
     class.define_method("distance", method!(Position::distance, 1))?;
     class.define_method("distancesq", method!(Position::distancesq, 1))?;
     Ok(())
 }
- */

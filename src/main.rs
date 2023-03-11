@@ -1,9 +1,13 @@
-use magnus::{embed, eval};
+use magnus::{embed, eval, require};
+use std::fs;
 
 mod core;
 
 fn main() {
-    let _cleanup = unsafe { magnus::embed::init() };
+    let _cleanup = unsafe { magnus::embed::init() }; //Initialize Ruby
 
-    eval::<bool>("5.times { |i| puts i }").unwrap();
+    core::init().unwrap(); //Initialize core
+                           //require("src/ruby/test.rb").unwrap();
+
+    eval::<bool>(&fs::read_to_string("src/ruby/test.rb").unwrap()).unwrap();
 }

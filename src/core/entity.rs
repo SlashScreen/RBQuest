@@ -1,5 +1,5 @@
 use super::position::Position;
-use magnus::{class, define_class, function, method, prelude::*, Error};
+use magnus;
 
 #[magnus::wrap(class = "Entity")]
 pub struct Entity {
