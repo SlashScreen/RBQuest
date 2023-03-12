@@ -2,6 +2,7 @@ use magnus::{embed, eval, require};
 use std::fs;
 
 mod core;
+mod gui;
 
 fn main() {
     let _cleanup = unsafe { magnus::embed::init() }; //Initialize Ruby
@@ -10,4 +11,5 @@ fn main() {
                            //require("src/ruby/test.rb").unwrap();
 
     eval::<bool>(&fs::read_to_string("src/ruby/test.rb").unwrap()).unwrap();
+    gui::launch_window();
 }
