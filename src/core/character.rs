@@ -1,5 +1,5 @@
 use super::id::HasID;
-use super::position::{HasPosition, Position};
+use super::position::{HasPosition, MutPosition, Position};
 use super::room::InRoom;
 use magnus::{class, define_class, define_module, function, method, prelude::*, Error};
 
@@ -27,8 +27,8 @@ impl HasID for Character {
 }
 
 impl HasPosition for Character {
-    fn pos(&self) -> &Position {
-        &self.pos
+    fn pos(&self) -> MutPosition {
+        MutPosition(self.pos.into())
     }
 }
 

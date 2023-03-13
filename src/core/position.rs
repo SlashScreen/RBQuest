@@ -4,6 +4,7 @@ use magnus::{
     class, define_class, function, init, method, module, Attr, Class, Error, Module, Object,
 };
 
+#[derive(Clone, Copy)]
 pub struct Position {
     pub x: f64,
     pub y: f64,
@@ -11,7 +12,7 @@ pub struct Position {
 }
 
 #[magnus::wrap(class = "Position", free_immediately, size)]
-pub struct MutPosition(std::cell::RefCell<Position>);
+pub struct MutPosition(pub std::cell::RefCell<Position>);
 
 impl MutPosition {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
@@ -36,10 +37,26 @@ impl MutPosition {
     pub fn set_x(&self, val: f64) {
         self.0.borrow_mut().x = val
     }
+
+    pub fn y(&self) -> f64 {
+        self.0.borrow().y
+    }
+
+    pub fn set_y(&self, val: f64) {
+        self.0.borrow_mut().y = val
+    }
+
+    pub fn z(&self) -> f64 {
+        self.0.borrow().z
+    }
+
+    pub fn set_z(&self, val: f64) {
+        self.0.borrow_mut().z = val
+    }
 }
 
 pub trait HasPosition {
-    fn pos(&self) -> &Position;
+    fn pos(&self) -> MutPosition;
 }
 
 pub fn init() -> Result<(), Error> {
@@ -49,5 +66,9 @@ pub fn init() -> Result<(), Error> {
     class.define_method("distancesq", method!(MutPosition::distancesq, 1))?;
     class.define_method("x", method!(MutPosition::x, 0))?;
     class.define_method("set_x", method!(MutPosition::set_x, 1))?;
+    class.define_method("y", method!(MutPosition::y, 0))?;
+    class.define_method("set_y", method!(MutPosition::set_y, 1))?;
+    class.define_method("z", method!(MutPosition::z, 0))?;
+    class.define_method("set_z", method!(MutPosition::set_z, 1))?;
     Ok(())
 }

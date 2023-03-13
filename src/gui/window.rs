@@ -3,7 +3,7 @@ use iced::alignment;
 use iced::theme;
 use iced::widget::{
     checkbox, column, container, horizontal_space, image, radio, row, scrollable, slider, text,
-    text_input, toggler, vertical_space,
+    text_input, toggler, vertical_space, Image,
 };
 use iced::widget::{Button, Column, Container, Slider};
 use iced::{Color, Element, Length, Renderer, Sandbox, Settings};
@@ -23,7 +23,7 @@ impl Sandbox for RBQuest {
     }
 
     fn view(&self) -> iced::Element<'_, Self::Message> {
-        container(row![text("Hello world")])
+        container(row![text("Hello world"), Image::new("res/ruby.png")])
             .height(Length::Fill)
             .center_y()
             .into()
