@@ -11,5 +11,5 @@ fn main() {
                            //require("src/ruby/test.rb").unwrap();
 
     eval::<bool>(&fs::read_to_string("src/ruby/test.rb").unwrap()).unwrap();
-    gui::launch_window();
+    gui::launch_window(); //Launch GUI
 }

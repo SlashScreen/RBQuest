@@ -6,4 +6,7 @@ class Test
 end
 
 Test.new.run
-puts Position.new(1, 2, 3)
+pos = Position.new(1, 2, 3)
+puts pos.x
+pos.set_x(15)
+puts pos.x
