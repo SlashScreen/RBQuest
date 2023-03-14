@@ -9,4 +9,4 @@ edition = "2021"
 iced = {version = "0.8.0", features = ["image"]}
 magnus = { version = "0.5.1", features = ["embed", "rb-sys-interop"] }
 rb-sys = "*"
-rutie = "0.8.4"
+#rutie = "0.8.4"

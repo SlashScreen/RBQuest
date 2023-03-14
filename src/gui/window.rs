@@ -14,7 +14,7 @@ impl Sandbox for RBQuest {
     type Message = Message;
 
     fn title(&self) -> String {
-        //TODO: COnfig file
+        //TODO: Config file
         "RBQuest".to_owned()
     }
 

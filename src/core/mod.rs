@@ -2,6 +2,7 @@ use magnus::Error;
 mod character;
 mod entity;
 mod id;
+mod input_value;
 mod position;
 mod room;
 
