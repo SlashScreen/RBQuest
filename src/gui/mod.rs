@@ -2,5 +2,5 @@
 mod window;
 
 pub fn launch_window() {
-    window::launch().unwrap()
+    window::launch().unwrap();
 }

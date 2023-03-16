@@ -1,40 +1,28 @@
 //For launching the window.
-use iced::alignment;
-use iced::theme;
-use iced::widget::{
-    checkbox, column, container, horizontal_space, image, radio, row, scrollable, slider, text,
-    text_input, toggler, vertical_space, Image,
+use speedy2d::{
+    color::Color,
+    error::BacktraceError,
+    image::ImageFileFormat,
+    window::{WindowCreationError, WindowHandler, WindowHelper},
+    Graphics2D, Window,
 };
-use iced::widget::{Button, Column, Container, Slider};
-use iced::{Color, Element, Length, Renderer, Sandbox, Settings};
+pub struct RBQuest {}
 
-pub struct RBQuest;
-
-impl Sandbox for RBQuest {
-    type Message = Message;
-
-    fn title(&self) -> String {
-        //TODO: Config file
-        "RBQuest".to_owned()
+impl WindowHandler for RBQuest {
+    fn on_draw(&mut self, helper: &mut WindowHelper<()>, graphics: &mut speedy2d::Graphics2D) {
+        graphics.clear_screen(Color::from_rgb(1.0, 1.0, 1.0));
+        let image = graphics
+            .create_image_from_file_path(
+                Some(ImageFileFormat::PNG),
+                speedy2d::image::ImageSmoothingMode::NearestNeighbor,
+                "./res/ruby.png",
+            )
+            .unwrap();
+        graphics.draw_image((50.0, 50.0), &image);
     }
-
-    fn new() -> Self {
-        RBQuest
-    }
-
-    fn view(&self) -> iced::Element<'_, Self::Message> {
-        container(row![text("Hello world"), Image::new("res/ruby.png")])
-            .height(Length::Fill)
-            .center_y()
-            .into()
-    }
-
-    fn update(&mut self, message: Self::Message) {}
 }
 
-#[derive(Debug, Clone)]
-pub enum Message {}
-
-pub fn launch() -> iced::Result {
-    RBQuest::run(Settings::default())
+pub fn launch() -> Result<Window<()>, BacktraceError<WindowCreationError>> {
+    let window = Window::<()>::new_centered("RBQuest", (640, 480))?;
+    window.run_loop(RBQuest {});
 }
