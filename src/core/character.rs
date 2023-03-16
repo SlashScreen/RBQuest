@@ -11,6 +11,7 @@ use magnus::{
     block, block::Proc, class, define_class, define_module, function, method, prelude::*, Error,
     Symbol,
 };
+use std::io::Read;
 
 /// A character object. A character is any object that can be rendered to the screen, and can be interacted with and moved around.
 /// It's meant for NPCs, but in theory it can be for anything.
@@ -112,6 +113,15 @@ impl MutCharacter {
         self.0.borrow_mut().clear_room()
     }
 
+    pub fn set_sprite(&self, sprite_path: String) {
+        let mut bytes: Vec<u8> = Vec::new(); // buffer
+        let mut f = std::fs::File::open(sprite_path).unwrap(); // open file
+        f.read_to_end(&mut bytes).unwrap(); // read file to buffer
+        let sprite = bytes.into_boxed_slice(); // convert to boxed slice
+
+        self.0.borrow_mut().sprite = sprite // set sprite
+    }
+
     pub fn input(&self, event: Symbol, proc: Proc) {
         self.0.borrow_mut().input(event, proc)
     }
@@ -149,6 +159,7 @@ pub fn init() -> Result<(), magnus::Error> {
     //    .singleton_class()?
     //    .define_method("on_input", function!(MutCharacter::on_input, 2))?;
     class.define_method("clear_room!", method!(MutCharacter::clear_room, 0))?;
+    class.define_method("set_sprite!", method!(MutCharacter::set_sprite, 1))?;
     class.define_method("room=", method!(MutCharacter::set_room, 1))?;
     Ok(())
 }

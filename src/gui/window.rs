@@ -4,8 +4,9 @@ use speedy2d::{
     error::BacktraceError,
     image::ImageFileFormat,
     window::{WindowCreationError, WindowHandler, WindowHelper},
-    Graphics2D, Window,
+    Window,
 };
+
 pub struct RBQuest {}
 
 impl WindowHandler for RBQuest {
